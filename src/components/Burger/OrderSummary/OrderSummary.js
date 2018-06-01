@@ -1,28 +1,36 @@
-import React from 'react';
-import Aux from '../../../hoc/Auxiliary';
+import React, {Component} from 'react';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../UI/Button/Button';
 
-const orederSummary = (props) => {
-  const ingredientSummary = Object.keys(props.ingredients)
-    .map(ingrKey => {
-      return  <li key={ingrKey}>
-                <span style={{textTransform: 'capitalize'}}>{ingrKey}</span>: {props.ingredients[ingrKey]}
-              </li>
-    });
+class orderSummary extends Component {
 
-  return (
-    <Aux>
-      <h3>Your Order</h3>
-      <p>Delicious burger with the following ingredients:</p>
-      <ul>
-        {ingredientSummary}
-      </ul>
-      <p><strong>Total price: {props.price.toFixed(2)}</strong></p>
-      <p>Continue to Checkout?</p>
-      <Button clicked={props.purchaseCanceled} btnType="Danger">CANCEL</Button>
-      <Button clicked={props.purchaseContinue} btnType="Success">CONTINUE</Button>
-    </Aux>
-  )
-};
+  // This could be a functional component, doesn't have to be a class
+  componentWillUpdate() {
+    console.log('[OrderSummary] WillUpdate');
+  }
 
-export default orederSummary;
+  render() {
+    const ingredientSummary = Object.keys(this.props.ingredients)
+      .map(ingrKey => {
+        return  <li key={ingrKey}>
+          <span style={{textTransform: 'capitalize'}}>{ingrKey}</span>: {this.props.ingredients[ingrKey]}
+        </li>
+      });
+
+    return (
+      <Aux>
+        <h3>Your Order</h3>
+        <p>Delicious burger with the following ingredients:</p>
+        <ul>
+          {ingredientSummary}
+        </ul>
+        <p><strong>Total price: {this.props.price.toFixed(2)}</strong></p>
+        <p>Continue to Checkout?</p>
+        <Button clicked={this.props.purchaseCanceled} btnType="Danger">CANCEL</Button>
+        <Button clicked={this.props.purchaseContinue} btnType="Success">CONTINUE</Button>
+      </Aux>
+    )
+  }
+}
+
+export default orderSummary;
